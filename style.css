@@ -249,7 +249,7 @@ p {
 
 .metric span {
   display: block;
-  color: var(--muted);
+  color: var(--ink);
   font-size: 15px;
   font-weight: 900;
 }
@@ -277,6 +277,11 @@ p {
 
 .metric--orange strong {
   color: var(--orange);
+}
+
+.metric--danger span,
+.metric--danger strong {
+  color: #b42318;
 }
 
 .board {

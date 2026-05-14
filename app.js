@@ -512,11 +512,12 @@ function renderDashboard(state) {
 
   const unusedMaster = branchRanking.filter((row) => row.isMaster && row.count === 0).length;
   const usedBranches = branchRanking.filter((row) => row.count > 0).length;
+  const activeStaffCount = staffRanking.filter((row) => row.count >= 10).length;
   const blockMasterCount = masterCountForBlock(state.master, activeBlockFilter);
   setMetric("metricUsage", formatCount(activeBranchFilter === "__ALL__" ? rows.length : staffSource.length, "件"));
   setMetric("metricBranches", blockMasterCount ? `${usedBranches}/${blockMasterCount}` : usedBranches);
   setMetric("metricUnused", formatCount(unusedMaster, "支店"));
-  setMetric("metricStaff", formatCount(staffRanking.length, "名"));
+  setMetric("metricStaff", formatCount(activeStaffCount, "名"));
 
   branchChart = renderBarChart(
     "branchChart",
