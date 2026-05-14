@@ -1,0 +1,147 @@
+<!doctype html>
+<html lang="ja">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <title>見積使用状況ダッシュボード</title>
+    <link rel="stylesheet" href="./style.css" />
+    <script src="https://cdn.jsdelivr.net/npm/chart.js@4.4.3/dist/chart.umd.min.js"></script>
+  </head>
+  <body>
+    <header class="topbar">
+      <div class="brand">
+        <span class="brand__mark">M</span>
+        <div>
+          <h1>見積使用状況ダッシュボード</h1>
+          <p id="status">データ読み込み中...</p>
+        </div>
+      </div>
+
+      <div class="toolbar" aria-label="表示条件">
+        <label class="field field--period">
+          <span>期間</span>
+          <select id="periodSelect"></select>
+        </label>
+        <label class="field field--block">
+          <span>ブロック</span>
+          <select id="blockFilterSelect"></select>
+        </label>
+        <label class="field field--branch">
+          <span>支店</span>
+          <select id="branchFilterSelect"></select>
+        </label>
+        <button id="reloadBtn" class="btn" type="button">条件クリア</button>
+      </div>
+    </header>
+
+    <main class="dashboard">
+      <section id="fileFallback" class="notice is-hidden">
+        <div>
+          <h2>ファイル選択で読み込み</h2>
+          <p>
+            自動読み込みに失敗しました。下の2ファイルを選ぶと、このブラウザ内だけで集計できます。
+          </p>
+        </div>
+        <div class="file-grid">
+          <label class="file">
+            <span>見積使用状況.csv</span>
+            <input id="usageFile" type="file" accept=".csv,text/csv" />
+          </label>
+          <label class="file">
+            <span>ニッショー73支店_整形.csv</span>
+            <input id="masterFile" type="file" accept=".csv,text/csv" />
+          </label>
+          <button id="loadFilesBtn" class="btn btn--primary" type="button">読み込む</button>
+        </div>
+      </section>
+
+      <section class="summary" aria-label="集計サマリー">
+        <article class="metric metric--blue">
+          <span>利用件数</span>
+          <strong id="metricUsage">-</strong>
+        </article>
+        <article class="metric metric--orange">
+          <span>利用支店・部署</span>
+          <strong id="metricBranches">-</strong>
+        </article>
+        <article class="metric">
+          <span>未使用の支店</span>
+          <strong id="metricUnused">-</strong>
+        </article>
+        <article class="metric">
+          <span>使用している担当者数</span>
+          <strong id="metricStaff">-</strong>
+          <small>※参考: 営業担当者231名 + 支店長73名</small>
+        </article>
+      </section>
+
+      <section class="board">
+        <article class="panel">
+          <div class="panel__head">
+            <div>
+              <p class="eyebrow">Branch Ranking</p>
+              <h2>支店別 件数ランキング</h2>
+            </div>
+            <span class="badge">グラフ上位20件</span>
+          </div>
+          <div class="chart-box">
+            <canvas id="branchChart"></canvas>
+          </div>
+          <div class="table-head">
+            <strong>全支店・部署一覧</strong>
+            <span id="branchTableNote">-</span>
+          </div>
+          <div class="table-wrap table-wrap--branch">
+            <table class="table" id="branchTable">
+              <thead>
+                <tr>
+                  <th>順位</th>
+                  <th>支店・部署</th>
+                  <th>区分</th>
+                  <th class="num">件数</th>
+                </tr>
+              </thead>
+              <tbody></tbody>
+            </table>
+          </div>
+        </article>
+
+        <article class="panel">
+          <div class="panel__head">
+            <div>
+              <p class="eyebrow">Staff Ranking</p>
+              <h2>担当者別 件数ランキング</h2>
+            </div>
+            <span class="badge badge--orange">グラフ上位12件</span>
+          </div>
+          <div class="chart-box">
+            <canvas id="staffChart"></canvas>
+          </div>
+          <div class="table-head">
+            <strong>担当者一覧</strong>
+            <span id="staffTableNote">-</span>
+          </div>
+          <div class="table-wrap table-wrap--staff">
+            <table class="table" id="staffTable">
+              <thead>
+                <tr>
+                  <th>順位</th>
+                  <th>支店・部署</th>
+                  <th>担当者</th>
+                  <th class="num">件数</th>
+                </tr>
+              </thead>
+              <tbody></tbody>
+            </table>
+          </div>
+        </article>
+      </section>
+    </main>
+
+    <footer class="footer">
+      <span>参照データ: data/見積使用状況.csv / data/ニッショー73支店_整形.csv</span>
+    </footer>
+
+    <script src="./app.js"></script>
+  </body>
+</html>
