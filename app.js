@@ -1,7 +1,7 @@
 /* global Chart */
 
-const DEFAULT_USAGE_PATH = "./data/見積使用状況.csv";
-const DEFAULT_MASTER_PATH = "./data/ニッショー73支店_整形.csv";
+const DEFAULT_USAGE_PATHS = ["./data/見積使用状況.csv", "./見積使用状況.csv"];
+const DEFAULT_MASTER_PATHS = ["./data/ニッショー73支店_整形.csv", "./ニッショー73支店_整形.csv"];
 const BRANCH_CHART_LIMIT = 20;
 const STAFF_CHART_LIMIT = 12;
 
@@ -575,6 +575,14 @@ function readFileText(file) {
   });
 }
 
+async function fetchFirstText(paths) {
+  for (const path of paths) {
+    const text = await fetchTextOrNull(path);
+    if (text) return text;
+  }
+  return null;
+}
+
 function setupPeriodSelect(usageRows) {
   const periods = Array.from(new Set(usageRows.map((row) => fiscalMonthKey(row.date)))).sort();
   const select = document.getElementById("periodSelect");
@@ -626,8 +634,8 @@ async function bootstrap({ usageText, masterText }) {
 }
 
 async function loadFromDefaultPaths() {
-  const usageText = await fetchTextOrNull(DEFAULT_USAGE_PATH);
-  const masterText = await fetchTextOrNull(DEFAULT_MASTER_PATH);
+  const usageText = await fetchFirstText(DEFAULT_USAGE_PATHS);
+  const masterText = await fetchFirstText(DEFAULT_MASTER_PATHS);
   return usageText && masterText ? { usageText, masterText } : null;
 }
 
