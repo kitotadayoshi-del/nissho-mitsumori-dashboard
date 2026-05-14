@@ -1,7 +1,13 @@
 /* global Chart */
 
-const DEFAULT_USAGE_PATHS = ["./data/見積使用状況.csv", "./見積使用状況.csv"];
-const DEFAULT_MASTER_PATHS = ["./data/ニッショー73支店_整形.csv", "./ニッショー73支店_整形.csv"];
+const DEFAULT_USAGE_PATHS = [
+  "./data/%E8%A6%8B%E7%A9%8D%E4%BD%BF%E7%94%A8%E7%8A%B6%E6%B3%81.csv",
+  "./%E8%A6%8B%E7%A9%8D%E4%BD%BF%E7%94%A8%E7%8A%B6%E6%B3%81.csv",
+];
+const DEFAULT_MASTER_PATHS = [
+  "./data/%E3%83%8B%E3%83%83%E3%82%B7%E3%83%A7%E3%83%BC73%E6%94%AF%E5%BA%97_%E6%95%B4%E5%BD%A2.csv",
+  "./%E3%83%8B%E3%83%83%E3%82%B7%E3%83%A7%E3%83%BC73%E6%94%AF%E5%BA%97_%E6%95%B4%E5%BD%A2.csv",
+];
 const BRANCH_CHART_LIMIT = 20;
 const STAFF_CHART_LIMIT = 12;
 
